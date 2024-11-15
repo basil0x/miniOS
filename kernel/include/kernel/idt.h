@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 
+//__attribute__((aligned(0x10)))
 typedef struct {
 	uint16_t    BaseLow;      		// The lower 16 bits of the ISR's address
 	uint16_t    SegmentSelector;    // The GDT segment selector that the CPU will load into CS before calling the ISR
@@ -14,7 +15,7 @@ typedef struct {
 	uint32_t		Base; 
 } __attribute__((packed)) idtd_t;   // Idt descriptor type
 
- __attribute__((aligned(0x10))) 
+//__attribute__((aligned(0x10))) 
 static idt_entry_t idt[256]; // Create an array of IDT entries; aligned for performance
 
 static idtd_t idtd = { sizeof(idt)-1,  idt}; // Create a descriptor 

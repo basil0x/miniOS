@@ -6,10 +6,36 @@
 
 static bool print(const char* data, size_t length) {
 	const unsigned char* bytes = (const unsigned char*) data;
-	for (size_t i = 0; i < length; i++)
+	for (size_t i = 0; i < length; i++) {
 		if (putchar(bytes[i]) == EOF)
 			return false;
+	}
 	return true;
+}
+
+static void itoa(int value, char* str, int base) {
+    char* digits = "0123456789abcdef";  // for base 16 (hexadecimal)
+    char* buf = str;
+    
+    // Handle negative values for decimal
+    if (value < 0 && base == 10) {
+        *buf++ = '-';
+        value = -value;
+    }
+
+    // Convert number to string in the specified base
+    int length = 0;
+    int temp = value;
+    do {
+        length++;
+        temp /= base;
+    } while (temp != 0);
+
+    buf[length] = '\0'; // null-terminate the string
+    while (length-- > 0) {
+        buf[length] = digits[value % base];
+        value /= base;
+    }
 }
 
 int printf(const char* restrict format, ...) {
@@ -53,6 +79,32 @@ int printf(const char* restrict format, ...) {
 		} else if (*format == 's') {
 			format++;
 			const char* str = va_arg(parameters, const char*);
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print(str, len))
+				return -1;
+			written += len;
+		} else if (*format == 'd') {
+			format++;
+			int num = va_arg(parameters, int);
+			char str[32]; // enough to store the largest 32-bit integer (including sign)
+			itoa(num, str, 10); // Convert to decimal string
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print(str, len))
+				return -1;
+			written += len;
+		} else if (*format == 'x') {
+			format++;
+			unsigned int num = va_arg(parameters, unsigned int);
+			char str[32]; // enough to store the largest 32-bit hexadecimal number
+			itoa(num, str, 16); // Convert to hexadecimal string
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.

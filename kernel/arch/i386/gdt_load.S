@@ -1,6 +1,6 @@
 .intel_syntax noprefix
 .section .text
-	.global gdt_load
+	.global gdt_load,_sgdt
 
 gdt_load:
 	# Copy the first argument in esp + 4 into eax
@@ -25,4 +25,15 @@ gdt_load:
 	ret
 
 .flush:
+	ret
+
+
+# void _sgdt(uint32_t);
+# eax			eax
+_sgdt:
+	enter 0,0
+
+	sgdt [eax]
+
+	leave
 	ret

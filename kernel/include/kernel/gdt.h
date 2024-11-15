@@ -25,3 +25,4 @@ void init_gdt();
 
 // To be filled with assembly in gdt_load.S
 extern void gdt_load(uint64_t);
+extern void _sgdt(uint32_t);
