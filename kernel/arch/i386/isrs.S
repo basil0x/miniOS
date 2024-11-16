@@ -13,6 +13,7 @@ ISR\isr_num:
 .macro ERRORCODE_ISR isr_num
     .global ISR\isr_num
 ISR\isr_num:
+    push 11
     push \isr_num
     jmp isr_common   
 .endm
@@ -292,7 +293,7 @@ isr_common:
     mov fs,ax
     mov gs,ax
 
-    push esp
+    #  pus esp
     
     call ISR_Handler
 

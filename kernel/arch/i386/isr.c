@@ -527,9 +527,9 @@ void ISR_Init()
 ISR_Handler(Registers reg)
 {
 
-    // BUG : Not correctly pushed in asm function so this output is garbage
+    // BUG : ISR with error codes pushing dummy 11
 
-    eprintf("Interrupt Service Routine triggered: %d\n",reg.interrupt);
+    eprintf("Interrupt Service Routine triggered: %s\n",exceptions[reg.interrupt]);
     eprintf("Data Segment: %x\n",reg.ds);
     eprintf("Registers: %x,%x,%x,%x,%x,%x,%x,%x\n",reg.edi,reg.esi,reg.ebp,reg.kern_esp,reg.ebx,reg.edx,reg.ecx,reg.eax);
     eprintf("Error code: %d\n",reg.error);
