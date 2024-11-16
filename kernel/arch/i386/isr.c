@@ -529,13 +529,27 @@ ISR_Handler(Registers reg)
 
     // BUG : ISR with error codes pushing dummy 11
 
+    // BUG : Assembly is horrendeous and cannot exit propperly afer interrupt sometimes
+
+    if(reg.interrupt<32)
+    { 
     eprintf("Interrupt Service Routine triggered: %s\n",exceptions[reg.interrupt]);
+    }
+    else
+    {
+    eprintf("Interrupt Service Routine triggered: %d\n",reg.interrupt);
+    }
+
     eprintf("Data Segment: %x\n",reg.ds);
     eprintf("Registers: %x,%x,%x,%x,%x,%x,%x,%x\n",reg.edi,reg.esi,reg.ebp,reg.kern_esp,reg.ebx,reg.edx,reg.ecx,reg.eax);
     eprintf("Error code: %d\n",reg.error);
     eprintf("EFLAGS: %x,%x,%x,%x,%x\n",reg.eip,reg.cs,reg.eflags,reg.esp,reg.ss);
 
-    printf("KERNEL PANIC!");
-
-    while(1);
+    if (reg.interrupt != 1)
+    {
+    printf("\nKERNEL PANIC!!!");
+    __asm("cli");
+    __asm("hlt");
+    }
+    
 }

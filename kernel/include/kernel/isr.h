@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 typedef struct{
+    uint32_t esp_junk;
     uint32_t ds;
     uint32_t edi,esi,ebp,kern_esp,ebx,edx,ecx,eax;
     uint32_t interrupt,error;
@@ -31,6 +32,11 @@ static char* exceptions [31] = {
 "SIMD Floating-Point Exception",
 "Virtualization Exception",
 "Control Protection Exception",
+"Reserved",
+"Reserved",
+"Reserved",
+"Reserved",
+"Reserved",
 "Reserved",
 "Hypervisor Injection Exception",
 "VMM_Communication_Exception",
