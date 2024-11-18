@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 
+// Magic fix. Needs to be changed.
 typedef struct{
     uint32_t esp_junk;
     uint32_t ds;

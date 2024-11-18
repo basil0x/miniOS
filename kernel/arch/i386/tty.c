@@ -40,7 +40,7 @@ void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 
 void terminal_putchar(char c) {
 	unsigned char uc = c;
-	if (c == '\n') {terminal_row++; terminal_column=-1;}
+	if (c == '\n') {if(terminal_row+1 == VGA_HEIGHT){terminal_initialize();terminal_row=0;} else terminal_row++; terminal_column=-1;}
 	else terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
 	if (++terminal_column == VGA_WIDTH) {
 		terminal_column = 0;
