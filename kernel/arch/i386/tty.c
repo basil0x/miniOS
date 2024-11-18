@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <string.h>
 
+
+#include <util/common.h>
 #include <kernel/tty.h>
 
 #include "vga.h"
@@ -38,6 +40,18 @@ void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 	terminal_buffer[index] = vga_entry(c, color);
 }
 
+void mov_crs(void){
+	unsigned temp;
+
+	temp = terminal_row * VGA_WIDTH + terminal_column;
+
+
+	outb(0x3D4, 14);
+	outb(0x3D5, temp >> 8);
+	outb(0x3D4, 15);
+	outb(0x3D5, temp);
+}
+
 void terminal_putchar(char c) {
 	unsigned char uc = c;
 	if (c == '\n') {if(terminal_row+1 == VGA_HEIGHT){terminal_initialize();terminal_row=0;} else terminal_row++; terminal_column=-1;}
@@ -47,6 +61,7 @@ void terminal_putchar(char c) {
 		if (++terminal_row == VGA_HEIGHT)
 			terminal_row = 0;
 	}
+	mov_crs();
 }
 
 void terminal_write(const char* data, size_t size) {
@@ -57,3 +72,5 @@ void terminal_write(const char* data, size_t size) {
 void terminal_writestring(const char* data) {
 	terminal_write(data, strlen(data));
 }
+
+
