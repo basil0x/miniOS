@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 static inline void outb(uint16_t port, uint8_t val)
 {

@@ -9,11 +9,12 @@ void kernel_main(void) {
 	terminal_initialize();
 	init_HAL();
 	__asm("sti");
-	
+
 	//crash();
 	printf(" log: Kernel loaded!\n");
 	__asm("int $1");
-	printf("\n[lain]> ");
+	printf("---[WELCOME]---\n");
+	scprintf("\n[lain]> ",0);
 	__asm("sti");
 	for(;;) {
     //__asm("sti");

@@ -4,6 +4,7 @@
 #include <kernel/idt.h>
 #include <kernel/pic.h>
 #include <io/keyboard.h>
+#include <io/kcoms.h>
 #include <util/common.h>
 
 
@@ -20,24 +21,20 @@ void irq1_handler() {
     //if(IS_PRESSED) printf("pressed");
     //if(IS_RELEASED) printf("released");
 
-    /* JUST DEMO */
-    /* Should be replaced with a switch */
-    if(IS_PRESSED && IS_SUPER)  kb_stat^= 0x01;
-    if(IS_PRESSED && IS_LCTRL)  kb_stat^= 0x02;
-    if(IS_PRESSED && IS_RCTRL)  kb_stat^= 0x04;
-    if(IS_PRESSED && IS_LSHIFT) kb_stat^= 0x08;
-    if(IS_PRESSED && IS_RSHIFT) kb_stat^= 0x10;
-    if(IS_PRESSED && IS_LALT)   kb_stat^= 0x20;
-    if(IS_PRESSED && IS_RALT)   kb_stat^= 0x40;
-    if(IS_RELEASED && IS_CAPS)  kb_stat^= 0x80;
+    kb_up_flags();
 
+    if(IS_PRESSED && IS_ENTER) process_kcom();
+
+    else 
+    {
     /* JUST DEMO */
     if(kbdmix[scan_code] && IS_PRESSED)
     {
         if((!STAT_CAPS)&&(!STAT_LSHIFT))
-        printf("%c",kbdmix[scan_code]);
+        {printf("%c",kbdmix[scan_code]);kcom_buff[kcom_indx++]=kbdmix[scan_code];}
         else printf("%c",kbdse_shift[scan_code]);
         
+    } 
     }
 
     __asm("sti");

@@ -49,6 +49,20 @@ void kb_init(void)
     /* Setup IRQ gate here in future */
 }
 
+    /* JUST DEMO */
+    /* Should be replaced with a switch */
+    #define kb_up_flags() do{\
+    if(IS_PRESSED && IS_SUPER)  kb_stat^= 0x01;\
+    if(IS_PRESSED && IS_LCTRL)  kb_stat^= 0x02;\
+    if(IS_PRESSED && IS_RCTRL)  kb_stat^= 0x04;\
+    if(IS_PRESSED && IS_LSHIFT) kb_stat^= 0x08;\
+    if(IS_PRESSED && IS_RSHIFT) kb_stat^= 0x10;\
+    if(IS_PRESSED && IS_LALT)   kb_stat^= 0x20;\
+    if(IS_PRESSED && IS_RALT)   kb_stat^= 0x40;\
+    if(IS_RELEASED && IS_CAPS)  kb_stat^= 0x80;\
+    }while(0)
+
+
 unsigned char kbdmix[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
