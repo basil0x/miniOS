@@ -1,5 +1,7 @@
 #pragma once
 
+/* TODO : Seperate into kcoms.h and kcoms.c */
+
 #include <stdio.h>
 #include <util/common.h>
 #include <kernel/tty.h>
@@ -44,6 +46,7 @@ void prompt(void)
     scprintf("\n[lain]> ",0);
 }
 
+/* TODO : Move to utils/common.h or implement string.h in libk */
 int strcmp(const char* s1, const char* s2)
 {
     while(*s1 && (*s1 == *s2))
@@ -57,10 +60,13 @@ int strcmp(const char* s1, const char* s2)
 /* Sould add hashed switch */
 void run_cmd(void)
 {
-    if(strcmp(kcom_buff,"test\0") == 0) printf("\nLet's All Love Lain!\n");
-    if(strcmp(kcom_buff,"clear\0") == 0) terminal_initialize();
-    if(strcmp(kcom_buff,"lscpu\0") == 0) print_cpu_info();
-    if(strcmp(kcom_buff,"lsp\0") == 0) printf("\nPROCESS NAME | PID | START TIME | THREADS\nKERNEL       | 000 | 0000000000 | 0000000");
+    if(strcmp(kcom_buff,"test\0") == 0) printf("\nLet's All Love Lain!");
+    else if(strcmp(kcom_buff,"clear\0") == 0) terminal_initialize();
+    else if(strcmp(kcom_buff,"wired\0") == 0) printf("\nNot wired.");
+    /* TODO : Fix cpu info */
+    else if(strcmp(kcom_buff,"lscpu\0") == 0) print_cpu_info();
+    else if(strcmp(kcom_buff,"lsp\0") == 0) printf("\nPROCESS NAME | PID | START TIME | THREADS\nKERNEL       | 000 | 0000000000 | 0000000");
+    else printf("\nCommand not found!");
     kcom_buff[0] = '\0';
 }
 
