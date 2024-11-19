@@ -1,2 +1,5 @@
 *.[oad]
 *.iso
+sysroot/*
+*.kernel
+grub.cfg
