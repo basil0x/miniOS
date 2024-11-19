@@ -13,7 +13,7 @@ void kernel_main(void) {
 	//crash();
 	printf(" log: Kernel loaded!\n");
 	__asm("int $1");
-	printf("---[WELCOME]---\n");
+	printf("---[VGA FALLBACK MODE]---\n");
 	scprintf("\n[lain]> ",0);
 	__asm("sti");
 	for(;;) {
