@@ -2,6 +2,8 @@
 A monolithic kernel skeleton
 
 # Build Dependencies
-- i386-elf-gcc
+- i686-elf-gcc
 - xorriso
+- grub2
+- mtools
 - qemu
