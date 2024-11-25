@@ -1,2 +1,7 @@
 # miniOS
-A minimal monolithic kernel skeleton
+A monolithic kernel skeleton
+
+# Build Dependencies
+- i386-elf-gcc
+- xorriso
+- qemu
